@@ -1,5 +1,8 @@
 package com.uqac.rthoni.java_rmi;
 
+import com.uqac.rthoni.com.java_rmi.client.ClientApplication;
+import com.uqac.rthoni.com.java_rmi.server.ServerApplication;
+
 import java.io.PrintStream;
 
 /**
@@ -63,7 +66,7 @@ public class Main {
             String classDir = args[3];
             String logFile = args[4];
 
-            System.out.println("Hello World! server");
+            ServerApplication.run(port, sourceDir, classDir, logFile);
         }
         else if (mode.equals("client")) {
             String host = args[1];
@@ -71,7 +74,7 @@ public class Main {
             String inputFile = args[3];
             String outputFile = args[4];
 
-            System.out.println("Hello World! client");
+            ClientApplication.run(host, port, inputFile, outputFile);
         }
         else {
             usage(name, true);
