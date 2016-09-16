@@ -2,6 +2,7 @@ package com.uqac.rthoni.java_rmi.server;
 
 import com.uqac.rthoni.java_rmi.server.executors.AbstractCommandExecutor;
 import com.uqac.rthoni.java_rmi.common.Command;
+import javafx.beans.binding.ObjectExpression;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -17,6 +19,14 @@ import java.util.Vector;
 public class ServerApplication {
 
     private Vector<AbstractCommandExecutor> _executors = null;
+
+    private HashMap<String, Object> _objects = new HashMap<>();
+
+    private String _sourceDir;
+
+    private String _classDir;
+
+    private String _logFile;
 
     public static String ipToString(InetAddress ip) {
         String ipString = ip.toString();
@@ -36,8 +46,33 @@ public class ServerApplication {
         }
     }
 
+    public void addObject(String id, Object obj)
+    {
+        _objects.put(id, obj);
+    }
+
+    public Object getObject(String id)
+    {
+        return _objects.get(id);
+    }
+
+    public String getSourceDir() {
+        return _sourceDir;
+    }
+
+    public String getClassDir() {
+        return _classDir;
+    }
+
+    public String getLogFile() {
+        return _logFile;
+    }
+
     public void run(int port, String sourceDir, String classDir, String logFile)
     {
+        _sourceDir = sourceDir;
+        _classDir = classDir;
+        _logFile = logFile;
         try {
             loadExecutors();
         } catch (ClassNotFoundException e) {
@@ -150,7 +185,7 @@ public class ServerApplication {
         }
         else {
             try {
-                data = executor.run(command);
+                data = executor.run(command, this);
             } catch (Exception e) {
                 data = String.format("Error when handling command: %s", e.getMessage());
                 System.err.println(data);

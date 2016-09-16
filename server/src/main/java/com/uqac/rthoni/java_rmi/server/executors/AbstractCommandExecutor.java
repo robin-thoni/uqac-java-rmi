@@ -2,6 +2,7 @@ package com.uqac.rthoni.java_rmi.server.executors;
 
 import com.uqac.rthoni.java_rmi.common.Command;
 import com.uqac.rthoni.java_rmi.common.ReflectionUtil;
+import com.uqac.rthoni.java_rmi.server.ServerApplication;
 
 import java.util.Vector;
 
@@ -17,5 +18,5 @@ public abstract class AbstractCommandExecutor {
 
     public abstract String getCommandName();
 
-    public abstract String run(Command command) throws Exception;
+    public abstract String run(Command command, ServerApplication server) throws Exception;
 }
