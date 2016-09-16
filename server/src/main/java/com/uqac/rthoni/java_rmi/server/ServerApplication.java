@@ -186,8 +186,11 @@ public class ServerApplication {
         else {
             try {
                 data = executor.run(command, this);
+                if (data == null) {
+                    data = "OK";
+                }
             } catch (Exception e) {
-                data = String.format("Error when handling command: %s", e.getMessage());
+                data = String.format("Error when handling command: %s %s", e.getClass().getName(), e.getMessage());
                 System.err.println(data);
             }
         }
