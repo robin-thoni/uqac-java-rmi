@@ -1,4 +1,4 @@
-package com.uqac.rthoni.com.java_rmi.client;
+package com.uqac.rthoni.java_rmi.client;
 
 import com.uqac.rthoni.java_rmi.common.Command;
 
@@ -11,7 +11,7 @@ import java.util.Vector;
  */
 public class ClientApplication {
 
-    public static Vector<Command> readInputFile(String file)
+    public Vector<Command> readInputFile(String file)
     {
         FileInputStream fileInputStream = null;
         try {
@@ -41,7 +41,7 @@ public class ClientApplication {
         return lines;
     }
 
-    public static void run(String host, int port, String inputFile, String outputFile)
+    public void run(String host, int port, String inputFile, String outputFile)
     {
         System.out.format("Reading input file %s...\n", inputFile);
         Vector<Command> commands = readInputFile(inputFile);
@@ -61,7 +61,7 @@ public class ClientApplication {
         }
     }
 
-    private static void runCommand(Command command, String host, int port, OutputStream outputStream)
+    private void runCommand(Command command, String host, int port, OutputStream outputStream)
     {
         System.out.format("Running command %s...\n", command.getCommandName());
         System.out.format("Connecting to %s:%d...\n", host, port);

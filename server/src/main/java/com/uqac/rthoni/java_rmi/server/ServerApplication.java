@@ -1,5 +1,6 @@
-package com.uqac.rthoni.com.java_rmi.server;
+package com.uqac.rthoni.java_rmi.server;
 
+import com.uqac.rthoni.java_rmi.server.executors.AbstractCommandExecutor;
 import com.uqac.rthoni.java_rmi.common.Command;
 
 import java.io.BufferedReader;
@@ -8,11 +9,14 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 /**
  * Created by robin on 9/15/16.
  */
 public class ServerApplication {
+
+    private Vector<AbstractCommandExecutor> _executors = null;
 
     public static String ipToString(InetAddress ip) {
         String ipString = ip.toString();
@@ -32,8 +36,15 @@ public class ServerApplication {
         }
     }
 
-    public static void run(int port, String sourceDir, String classDir, String logFile)
+    public void run(int port, String sourceDir, String classDir, String logFile)
     {
+        try {
+            loadExecutors();
+        } catch (ClassNotFoundException e) {
+            System.err.format("Failed to load executors: %s\n", e.getMessage());
+            System.exit(1);
+        }
+
         String host = "0.0.0.0";
         InetAddress ip = null;
         try {
@@ -43,7 +54,7 @@ public class ServerApplication {
         }
         if (ip == null) {
             System.err.format("Failed to resolve '%s'\n", host);
-            System.exit(1);
+            System.exit(2);
         }
         String ipString = ipToString(ip);
 
@@ -53,14 +64,27 @@ public class ServerApplication {
             runServer(serverSocket);
         } catch (IOException e) {
             System.err.format("Failed to listen on %s:%d: %s\n", ipString, port, e.getMessage());
-            System.exit(2);
+            System.exit(3);
         }
     }
 
-    public static void runServer(ServerSocket serverSocket)
+    private void loadExecutors() throws ClassNotFoundException
     {
-        boolean stop = false;
-        while (!stop) {
+        _executors = new Vector<>();
+        Vector<Class> classes = AbstractCommandExecutor.getAllExecutors();
+        for (Class c : classes) {
+            try {
+                AbstractCommandExecutor executor = (AbstractCommandExecutor)c.newInstance();
+                _executors.add(executor);
+            } catch (Exception e) {
+                System.err.format("Failed to load executor '%s': %s\n", c.getName(), e.getMessage());
+            }
+        }
+    }
+
+    private void runServer(ServerSocket serverSocket)
+    {
+        while (true) {
             Socket client = null;
             try {
                 client = serverSocket.accept();
@@ -85,7 +109,7 @@ public class ServerApplication {
         }
     }
 
-    private static void handleClient(Socket client)
+    private void handleClient(Socket client)
     {
         String str;
         try {
@@ -101,11 +125,42 @@ public class ServerApplication {
         }
         else {
             System.out.format("Received command: %s\n", command.getCommandName());
-            try {
-                client.getOutputStream().write("test\n".getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            handleCommand(command, client);
+        }
+    }
+
+    private AbstractCommandExecutor getExecutor(Command command)
+    {
+        for (AbstractCommandExecutor executor : _executors) {
+            if (executor.getCommandName().equals(command.getCommandName())) {
+                return executor;
             }
+        }
+        return null;
+    }
+
+    private void handleCommand(Command command, Socket client)
+    {
+        String data;
+        AbstractCommandExecutor executor = getExecutor(command);
+        if (executor == null) {
+            data = String.format("Unknown command '%s'", command.getCommandName());
+            System.err.println(data);
+        }
+        else {
+            try {
+                data = executor.run(command);
+            } catch (Exception e) {
+                data = String.format("Error when handling command: %s", e.getMessage());
+                System.err.println(data);
+            }
+        }
+
+        try {
+            client.getOutputStream().write(String.format("%s\n", data).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
