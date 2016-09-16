@@ -6,6 +6,8 @@ package com.uqac.rthoni.java_rmi.server;
 public class TestDbo {
     private String privateString = "default_value";
 
+    private int privateInt = 24;
+
     public int publicInt = 42;
 
     public String getPrivateString() {
@@ -14,5 +16,13 @@ public class TestDbo {
 
     public void setPrivateString(String privateString) {
         this.privateString = privateString;
+    }
+
+    public int getPrivateInt() {
+        return privateInt;
+    }
+
+    public void setPrivateInt(int privateInt) {
+        this.privateInt = privateInt;
     }
 }
