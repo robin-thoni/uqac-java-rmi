@@ -1,6 +1,8 @@
 package com.uqac.rthoni.java_rmi.common;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,11 @@ public class Command implements Serializable {
     public String getArgument(int i)
     {
         return _arguments.get(i);
+    }
+
+    public Vector<String> getArgmumentAsList(int i)
+    {
+        return new Vector<String>(Arrays.asList(_arguments.get(i).split(",")));
     }
 
     public void setResult(String result)

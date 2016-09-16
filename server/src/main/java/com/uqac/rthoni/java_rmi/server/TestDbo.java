@@ -25,4 +25,8 @@ public class TestDbo {
     public void setPrivateInt(int privateInt) {
         this.privateInt = privateInt;
     }
+
+    public void setPrivateInteger(Integer privateInt) {
+        this.privateInt = privateInt;
+    }
 }

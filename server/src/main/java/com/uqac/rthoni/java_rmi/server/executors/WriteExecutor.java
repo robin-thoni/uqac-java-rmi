@@ -1,6 +1,7 @@
 package com.uqac.rthoni.java_rmi.server.executors;
 
 import com.uqac.rthoni.java_rmi.common.Command;
+import com.uqac.rthoni.java_rmi.common.ReflectionUtil;
 import com.uqac.rthoni.java_rmi.server.ServerApplication;
 
 import java.lang.reflect.Field;
@@ -25,35 +26,13 @@ public class WriteExecutor extends AbstractCommandExecutor {
         Object obj = server.getObject(id);
         Class objClass = obj.getClass();
         Field field = objClass.getDeclaredField(fieldName);
+        Object typedValue = ReflectionUtil.toObject(field.getDeclaringClass(), value);
 
         try {
-            field.set(obj, value);
+            field.set(obj, typedValue);
         } catch (IllegalAccessException e) {
-            try {
-                Method method = objClass.getDeclaredMethod(methodName, String.class);
-                method.invoke(obj, value);
-            }
-            catch (NoSuchMethodException e2) {
-                try {
-                    Method method = objClass.getDeclaredMethod(methodName, int.class);
-                    method.invoke(obj, Integer.parseInt(value));
-                }
-                catch (NoSuchMethodException e3) {
-                    try {
-                        Method method = objClass.getDeclaredMethod(methodName, float.class);
-                        method.invoke(obj, Float.parseFloat(value));
-                    }
-                    catch (NoSuchMethodException e4) {
-                        try {
-                            Method method = objClass.getDeclaredMethod(methodName, boolean.class);
-                            method.invoke(obj, Boolean.parseBoolean(value));
-                        }
-                        catch (NoSuchMethodException e5) {
-                            throw new Exception("No such setter");
-                        }
-                    }
-                }
-            }
+            Method method = objClass.getDeclaredMethod(methodName, typedValue.getClass());
+            method.invoke(obj, typedValue);
         }
 
         return null;

@@ -73,4 +73,55 @@ public class ReflectionUtil {
 
         return classList;
     }
+
+    public static Object toObject(Class className, String value)
+    {
+        if (className == Boolean.class || className == boolean.class) {
+            return Boolean.parseBoolean(value);
+        }
+        if (className == Byte.class || className == byte.class) {
+            return Byte.parseByte(value);
+        }
+        if (className == Short.class || className == short.class) {
+            return Short.parseShort(value);
+        }
+        if (className == Integer.class || className == int.class) {
+            return Integer.parseInt(value);
+        }
+        if (className == Long.class || className == long.class) {
+            return Long.parseLong(value);
+        }
+        if (className == Float.class || className == float.class) {
+            return Float.parseFloat(value);
+        }
+        if (className == Double.class || className == double.class) {
+            return Double.parseDouble(value);
+        }
+        return value;
+    }
+
+    public static Class getClass(String className) throws ClassNotFoundException {
+        if (className.equals("boolean")) {
+            return boolean.class;
+        }
+        if (className.equals("byte")) {
+            return byte.class;
+        }
+        if (className.equals("short")) {
+            return short.class;
+        }
+        if (className.equals("int")) {
+            return int.class;
+        }
+        if (className.equals("long")) {
+            return long.class;
+        }
+        if (className.equals("float")) {
+            return float.class;
+        }
+        if (className.equals("double")) {
+            return double.class;
+        }
+        return Class.forName(className);
+    }
 }

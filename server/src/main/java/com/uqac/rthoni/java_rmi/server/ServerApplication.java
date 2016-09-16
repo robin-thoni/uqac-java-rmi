@@ -103,7 +103,7 @@ public class ServerApplication {
         }
     }
 
-    private void loadExecutors() throws ClassNotFoundException
+    public void loadExecutors() throws ClassNotFoundException
     {
         _executors = new Vector<>();
         Vector<Class> classes = AbstractCommandExecutor.getAllExecutors();
@@ -117,7 +117,7 @@ public class ServerApplication {
         }
     }
 
-    private void runServer(ServerSocket serverSocket)
+    public void runServer(ServerSocket serverSocket)
     {
         while (true) {
             Socket client = null;
@@ -144,7 +144,7 @@ public class ServerApplication {
         }
     }
 
-    private void handleClient(Socket client)
+    public void handleClient(Socket client)
     {
         String str;
         try {
@@ -165,7 +165,7 @@ public class ServerApplication {
         }
     }
 
-    private AbstractCommandExecutor getExecutor(Command command)
+    public AbstractCommandExecutor getExecutor(Command command)
     {
         for (AbstractCommandExecutor executor : _executors) {
             if (executor.getCommandName().equals(command.getCommandName())) {
@@ -175,7 +175,7 @@ public class ServerApplication {
         return null;
     }
 
-    private void handleCommand(Command command, Socket client)
+    public void handleCommand(Command command, Socket client)
     {
         String data;
         AbstractCommandExecutor executor = getExecutor(command);
