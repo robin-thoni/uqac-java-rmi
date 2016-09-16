@@ -26,12 +26,12 @@ public class WriteExecutor extends AbstractCommandExecutor {
         Object obj = server.getObject(id);
         Class objClass = obj.getClass();
         Field field = objClass.getDeclaredField(fieldName);
-        Object typedValue = ReflectionUtil.toObject(field.getDeclaringClass(), value);
+        Object typedValue = ReflectionUtil.toObject(field.getType(), value);
 
         try {
             field.set(obj, typedValue);
         } catch (IllegalAccessException e) {
-            Method method = objClass.getDeclaredMethod(methodName, typedValue.getClass());
+            Method method = objClass.getDeclaredMethod(methodName, field.getType());
             method.invoke(obj, typedValue);
         }
 
