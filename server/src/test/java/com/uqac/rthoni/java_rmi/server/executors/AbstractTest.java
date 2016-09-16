@@ -20,9 +20,11 @@ public abstract class AbstractTest {
             String res = runCommand(app, s);
             if (res != null) {
                 stringBuilder.append(res);
+                stringBuilder.append("\n");
             }
         }
-        return stringBuilder.toString();
+        String res = stringBuilder.toString();
+        return res.substring(0, res.length() - 1);
     }
 
     public ServerApplication getServer() throws Exception {

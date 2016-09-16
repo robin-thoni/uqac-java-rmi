@@ -14,8 +14,8 @@ public class NewInstanceExecutor extends AbstractCommandExecutor {
 
     @Override
     public String run(Command command, ServerApplication server) throws Exception {
-        String className = command.getArgument(0);
-        String id = command.getArgument(1);
+        String className = command.getArgument(0, false);
+        String id = command.getArgument(1, false);
         Class c = Class.forName(className);
         Object obj = c.newInstance();
         server.addObject(id, obj);

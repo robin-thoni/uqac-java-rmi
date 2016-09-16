@@ -20,10 +20,10 @@ public class MethodExecutor extends AbstractCommandExecutor {
 
     @Override
     public String run(Command command, ServerApplication server) throws Exception {
-        String id = command.getArgument(0);
-        String methodName = command.getArgument(1);
+        String id = command.getArgument(0, false);
+        String methodName = command.getArgument(1, false);
         Object obj = server.getObject(id);
-        List<Pair<Class, String>> argClasses = command.getArgmumentAsList(2).stream().map(v -> {
+        List<Pair<Class, String>> argClasses = command.getArgumentAsList(2, true).stream().map(v -> {
             String[] split = v.split(":");
             try {
                 return new Pair<>(ReflectionUtil.getClass(split[0]), split[1]);

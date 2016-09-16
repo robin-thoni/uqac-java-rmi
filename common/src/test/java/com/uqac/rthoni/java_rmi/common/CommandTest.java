@@ -96,7 +96,7 @@ public class CommandTest {
         assertNotNull(c);
         assertEquals(c.getCommandName(), "Test");
         assertEquals(c.getArgumentCount(), 1);
-        assertEquals(c.getArgument(0), "an_argument");
+        assertEquals(c.getArgument(0, false), "an_argument");
     }
 
     @Test
@@ -106,7 +106,7 @@ public class CommandTest {
         assertNotNull(c);
         assertEquals(c.getCommandName(), "Test");
         assertEquals(c.getArgumentCount(), 2);
-        assertEquals(c.getArgument(0), "an_argument");
-        assertEquals(c.getArgument(1), "an_argument2");
+        assertEquals(c.getArgument(0, false), "an_argument");
+        assertEquals(c.getArgument(1, false), "an_argument2");
     }
 }

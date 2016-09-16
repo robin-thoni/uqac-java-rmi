@@ -69,14 +69,20 @@ public class Command implements Serializable {
         return _arguments.size();
     }
 
-    public String getArgument(int i)
+    public String getArgument(int i, boolean optional)
     {
+        if (i >= _arguments.size() && optional) {
+            return "";
+        }
         return _arguments.get(i);
     }
 
-    public Vector<String> getArgmumentAsList(int i)
+    public Vector<String> getArgumentAsList(int i, boolean optional)
     {
-        return new Vector<String>(Arrays.asList(_arguments.get(i).split(",")));
+        if (i >= _arguments.size() && optional) {
+            return new Vector<>();
+        }
+        return new Vector<>(Arrays.asList(_arguments.get(i).split(",")));
     }
 
     public void setResult(String result)

@@ -17,8 +17,8 @@ public class ReadExecutor extends AbstractCommandExecutor {
 
     @Override
     public String run(Command command, ServerApplication server) throws Exception {
-        String id = command.getArgument(0);
-        String fieldName = command.getArgument(1);
+        String id = command.getArgument(0, false);
+        String fieldName = command.getArgument(1, false);
         String methodName = String.format("get%s%s", fieldName.substring(0, 1).toUpperCase(), fieldName.substring(1));
 
         Object obj = server.getObject(id);

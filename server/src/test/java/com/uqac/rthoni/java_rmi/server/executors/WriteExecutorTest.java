@@ -20,7 +20,7 @@ public class WriteExecutorTest extends AbstractTest {
         assertEquals(res, "24");
         Object obj = app.getObject("test");
         assertNotNull(obj);
-        assertEquals(obj.toString(), "privateString=default_value, privateInt=24, publicInt=24, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=true");
+        assertEquals("privateString=default_value, privateInt=24, publicInt=24, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=true", obj.toString());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class WriteExecutorTest extends AbstractTest {
         assertEquals(res, "42");
         Object obj = app.getObject("test");
         assertNotNull(obj);
-        assertEquals(obj.toString(), "privateString=default_value, privateInt=42, publicInt=42, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=true");
+        assertEquals("privateString=default_value, privateInt=42, publicInt=42, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=true", obj.toString());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class WriteExecutorTest extends AbstractTest {
         assertEquals(res, "a_value");
         Object obj = app.getObject("test");
         assertNotNull(obj);
-        assertEquals(obj.toString(), "privateString=a_value, privateInt=24, publicInt=42, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=true");
+        assertEquals("privateString=a_value, privateInt=24, publicInt=42, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=true", obj.toString());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class WriteExecutorTest extends AbstractTest {
         assertEquals(res, "4242.5");
         Object obj = app.getObject("test");
         assertNotNull(obj);
-        assertEquals(obj.toString(), "privateString=default_value, privateInt=24, publicInt=42, aPrivateField=0, publicFloat=4242.500000, publicDouble=0.125000, publicBool=true");
+        assertEquals("privateString=default_value, privateInt=24, publicInt=42, aPrivateField=0, publicFloat=4242.500000, publicDouble=0.125000, publicBool=true", obj.toString());
     }
 
     @Test
@@ -72,6 +72,6 @@ public class WriteExecutorTest extends AbstractTest {
         assertEquals(res, "false");
         Object obj = app.getObject("test");
         assertNotNull(obj);
-        assertEquals(obj.toString(), "privateString=default_value, privateInt=24, publicInt=42, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=false");
+        assertEquals("privateString=default_value, privateInt=24, publicInt=42, aPrivateField=0, publicFloat=0.420000, publicDouble=0.125000, publicBool=false", obj.toString());
     }
 }

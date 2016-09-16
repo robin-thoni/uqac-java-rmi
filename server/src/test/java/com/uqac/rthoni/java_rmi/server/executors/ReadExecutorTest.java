@@ -16,7 +16,7 @@ public class ReadExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "lecture#test#publicInt");
-        assertEquals(res, "42");
+        assertEquals("42", res);
     }
 
     @Test
@@ -25,7 +25,7 @@ public class ReadExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "lecture#test#privateInt");
-        assertEquals(res, "24");
+        assertEquals("24", res);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class ReadExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "lecture#test#privateString");
-        assertEquals(res, "default_value");
+        assertEquals("default_value", res);
     }
 
     @Test(expected = NoSuchMethodException.class)
@@ -59,7 +59,7 @@ public class ReadExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "lecture#test#publicFloat");
-        assertEquals(res, "0.42");
+        assertEquals("0.42", res);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ReadExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "lecture#test#publicDouble");
-        assertEquals(res, "0.125");
+        assertEquals("0.125", res);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class ReadExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "lecture#test#publicBool");
-        assertEquals(res, "true");
+        assertEquals("true", res);
     }
 }

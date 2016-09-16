@@ -43,6 +43,15 @@ public class TestDbo {
         return str;
     }
 
+    public void uselessMethod(int i, int j, String str)
+    {
+    }
+
+    public String getMyString(TestDbo dbo)
+    {
+        return dbo.getPrivateString();
+    }
+
     public String toString()
     {
         return String.format("privateString=%s, privateInt=%d, publicInt=%d, aPrivateField=%d, publicFloat=%f, publicDouble=%f, publicBool=%b",
