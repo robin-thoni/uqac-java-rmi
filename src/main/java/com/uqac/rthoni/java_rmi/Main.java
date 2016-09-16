@@ -14,20 +14,20 @@ public class Main {
         PrintStream printStream = (error ? System.err : System.out);
 
         printStream.println("Usage:");
-        printStream.println(String.format("%1s server port source_dir class_dir log_file", name));
+        printStream.format("%s server port source_dir class_dir log_file\n", name);
         printStream.println("\tPut the program in server mode");
         printStream.println("\tport: the port to listen on [1-65535]");
         printStream.println("\tsource_dir: the folder to search for java files");
         printStream.println("\tclass_dir: the folder to build java files");
         printStream.println("\tlog_file: the file to log events");
-        printStream.println(String.format("%1s client hostname port input_file output_file", name));
+        printStream.format("%s client hostname port input_file output_file\n", name);
         printStream.println("\tPut the program in client mode");
         printStream.println("\thost: the remote server ip or hostname");
         printStream.println("\tport: the port to connect on [1-65535]");
         printStream.println("\tinput_file: the command file to use");
         printStream.println("\toutput_file: the file to output command results");
-        printStream.println(String.format("%1s --help", name));
-        printStream.println(String.format("%1s -h", name));
+        printStream.format("%s --help\n", name);
+        printStream.format("%s -h\n", name);
         printStream.println("\tPrint this help and exit");
 
         if (error) {

@@ -7,6 +7,6 @@ public class ClientApplication {
 
     public static void run(String host, int port, String inputFile, String outputFile)
     {
-        System.out.println(String.format("Connecting to %1s:%2d...", host, port));
+        System.out.println(String.format("Connecting to %s:%d...", host, port));
     }
 }
