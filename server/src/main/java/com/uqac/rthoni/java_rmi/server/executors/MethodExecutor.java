@@ -26,7 +26,7 @@ public class MethodExecutor extends AbstractCommandExecutor {
         List<Pair<Class, String>> argClasses = command.getArgumentAsList(2, true).stream().map(v -> {
             String[] split = v.split(":");
             try {
-                return new Pair<>(ReflectionUtil.getClass(split[0]), split[1]);
+                return new Pair<>(ReflectionUtil.getClass(split[0], server.getClassLoaders()), split[1]);
             } catch (ClassNotFoundException e) {
                 return null;
             }
@@ -34,7 +34,7 @@ public class MethodExecutor extends AbstractCommandExecutor {
         List<Object> arguments = argClasses.stream().map(p -> {
             String value = p.getValue();
             if (value.startsWith("ID(") && value.endsWith(")")) {
-                value = value.substring(3, value.length() - 2);
+                value = value.substring(3, value.length() - 1);
                 return server.getObject(value);
             }
             return ReflectionUtil.toObject(p.getKey(), value);

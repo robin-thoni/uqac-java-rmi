@@ -23,9 +23,10 @@ public class ClassLoaderExecutor extends AbstractCommandExecutor {
 
         File root = new File(server.getClassDir(), classDir);
         URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { root.toURI().toURL() });
-        Class<?> cls = Class.forName(className, true, classLoader); // Should print "hello".
-        Object instance = cls.newInstance(); // Should print "world".
-        System.out.println(instance); // Should print "test.Test@hashcode".
+        server.addClassLoader(classLoader);
+//        Class<?> cls = Class.forName(className, true, classLoader); // Should print "hello".
+//        Object instance = cls.newInstance(); // Should print "world".
+//        System.out.println(instance); // Should print "test.Test@hashcode".
 
         return null;
     }

@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -18,9 +19,11 @@ import java.util.Vector;
  */
 public class ServerApplication {
 
-    private Vector<AbstractCommandExecutor> _executors = null;
+    private Vector<AbstractCommandExecutor> _executors = new Vector<>();
 
     private HashMap<String, Object> _objects = new HashMap<>();
+
+    private Vector<ClassLoader> _loaders = new Vector<>();
 
     private String _sourceDir;
 
@@ -54,6 +57,16 @@ public class ServerApplication {
     public Object getObject(String id)
     {
         return _objects.get(id);
+    }
+
+    public void addClassLoader(ClassLoader loader)
+    {
+        _loaders.add(loader);
+    }
+
+    public List<ClassLoader> getClassLoaders()
+    {
+        return _loaders;
     }
 
     public String getSourceDir() {
@@ -105,7 +118,7 @@ public class ServerApplication {
 
     public void loadExecutors() throws ClassNotFoundException
     {
-        _executors = new Vector<>();
+        _executors.clear();
         Vector<Class> classes = AbstractCommandExecutor.getAllExecutors();
         for (Class c : classes) {
             try {

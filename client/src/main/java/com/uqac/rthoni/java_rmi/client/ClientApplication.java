@@ -45,12 +45,17 @@ public class ClientApplication {
     {
         System.out.format("Reading input file %s...\n", inputFile);
         Vector<Command> commands = readInputFile(inputFile);
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = new FileOutputStream(outputFile);
-        } catch (Exception e) {
-            System.err.format("Failed to open output file %s: %s\n", outputFile, e.getMessage());
-            System.exit(3);
+        OutputStream outputStream = null;
+        if (outputFile.equals("-")) {
+            outputStream = System.out;
+        }
+        else {
+            try {
+                outputStream = new FileOutputStream(outputFile);
+            } catch (Exception e) {
+                System.err.format("Failed to open output file %s: %s\n", outputFile, e.getMessage());
+                System.exit(3);
+            }
         }
         for (Command command : commands) {
             runCommand(command, host, port, outputStream);

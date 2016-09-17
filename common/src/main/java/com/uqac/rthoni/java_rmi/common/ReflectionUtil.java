@@ -100,7 +100,7 @@ public class ReflectionUtil {
         return value;
     }
 
-    public static Class getClass(String className) throws ClassNotFoundException {
+    public static Class getClass(String className, List<ClassLoader> loaders) throws ClassNotFoundException {
         if (className.equals("boolean")) {
             return boolean.class;
         }
@@ -122,6 +122,18 @@ public class ReflectionUtil {
         if (className.equals("double")) {
             return double.class;
         }
+        for (ClassLoader classLoader : loaders) {
+            try {
+                return (Class) Class.forName(className, true, classLoader);
+            } catch (ClassNotFoundException e) {
+            }
+        }
         return Class.forName(className);
+    }
+
+    public static Object newInstance(String className, List<ClassLoader> loaders)
+            throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Class c = getClass(className, loaders);
+        return c.newInstance();
     }
 }
