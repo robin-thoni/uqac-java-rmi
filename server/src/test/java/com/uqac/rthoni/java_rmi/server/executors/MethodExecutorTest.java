@@ -34,7 +34,7 @@ public class MethodExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test2",
-                "ecriture#test#privateString#some_value",
+                "ecriture#test2#privateString#some_value",
                 "fonction#test#getMyString#com.uqac.rthoni.java_rmi.server.executors.TestDbo:ID(test2)");
         assertEquals("some_value", res);
     }
@@ -45,7 +45,7 @@ public class MethodExecutorTest extends AbstractTest {
         ServerApplication app = getServer();
         String res = runCommands(app, "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test",
                 "creation#com.uqac.rthoni.java_rmi.server.executors.TestDbo#test2",
-                "fonction#test#setPrivateString#java.lang.String:some_value",
+                "fonction#test2#setPrivateString#java.lang.String:some_value",
                 "fonction#test#getMyString#com.uqac.rthoni.java_rmi.server.executors.TestDbo:ID(test2)");
         assertEquals("NULL\nsome_value", res);
     }
