@@ -60,7 +60,7 @@ public class Main {
             usage(name, true);
         }
         String mode = args[0];
-        if (mode.equals("server")) {
+        if (mode.equals("com/uqac/rthoni/java_rmi/server")) {
             int port = getPort(name, args[1]);
             String sourceDir = args[2];
             String classDir = args[3];
