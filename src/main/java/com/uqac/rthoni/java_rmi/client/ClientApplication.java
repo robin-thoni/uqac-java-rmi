@@ -11,6 +11,14 @@ import java.util.Vector;
  */
 public class ClientApplication {
 
+    public void format(OutputStream outputStream, String format, Object... objs)
+    {
+        try {
+            outputStream.write(String.format(format, objs).getBytes());
+        } catch (IOException e) {
+        }
+    }
+
     public Vector<Command> readInputFile(String file)
     {
         FileInputStream fileInputStream = null;
@@ -43,8 +51,6 @@ public class ClientApplication {
 
     public void run(String host, int port, String inputFile, String outputFile)
     {
-        System.out.format("Reading input file %s...\n", inputFile);
-        Vector<Command> commands = readInputFile(inputFile);
         OutputStream outputStream = null;
         if (outputFile.equals("-")) {
             outputStream = System.out;
@@ -57,6 +63,9 @@ public class ClientApplication {
                 System.exit(3);
             }
         }
+
+        format(outputStream, "Reading input file %s...\n", inputFile);
+        Vector<Command> commands = readInputFile(inputFile);
         for (Command command : commands) {
             runCommand(command, host, port, outputStream);
         }
@@ -68,8 +77,8 @@ public class ClientApplication {
 
     private void runCommand(Command command, String host, int port, OutputStream outputStream)
     {
-        System.out.format("Running command %s...\n", command.getCommandName());
-        System.out.format("Connecting to %s:%d...\n", host, port);
+        format(outputStream, "Running command %s...\n", command.getCommandName());
+        format(outputStream, "Connecting to %s:%d...\n", host, port);
         Socket server = null;
         try {
             server = new Socket(host, port);
